@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shooting Game</title>
+
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="container">
+        <button type="button" class="startBtn">Start Game</button>
+
+        <img src="./crosshair.png" alt="Crosshair" class="cursor" />
+        <img src="./blood-spot.png" alt="Blood Spot" class="bloodSpot" />
+    </div>
+
+    <script>
+        const container = document.querySelector(".container");
+        const bloodSpot = document.querySelector(".bloodSpot");
+        const startBtn = document.querySelector(".startBtn");
+
+        const enemy = document.createElement("img");
+        enemy.setAttribute("class", "enemy");
+        enemy.setAttribute("src", "./enemy.png");
+
+        const contHeight = container.offsetHeight;
+        const contWidth = container.offsetWidth;
+
+        setInterval(() => {
+            const randTop = Math.random() * (contHeight - 100);
+            const randLeft = Math.random() * (contWidth - 100);
+
+            enemy.style.position = "absolute";
+            enemy.style.top = randTop + "px";
+            enemy.style.left = randLeft + "px";
+
+        }, 1000);
+
+        let score = 0;
+
+        startBtn.addEventListener("click", () => {
+            container.appendChild(enemy);
+
+            startBtn.innerText = "SCORE : " + score; 
+        });
+
+        window.addEventListener("click", (e)=> {
+            bloodSpot.style.top = e.pageY + "px";
+            bloodSpot.style.left = e.pageX + "px";
+
+            if(e.target === enemy) score++;
+            startBtn.innerText = "SCORE : " + score; 
+        });
+
+        const cursor = document.querySelector(".cursor");
+        window.addEventListener("mousemove", (e) => {
+            cursor.style.top = e.pageY + "px";
+            cursor.style.left = e.pageX + "px";
+        });
+    </script>
+</body>
+</html>
